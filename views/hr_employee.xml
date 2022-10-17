@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+##############################################################################
+#
+#  2022 Henderson Zambrano  <zambranohender@gmail.com>.
+#
+##############################################################################
+-->
+
+<odoo>
+    <data>
+
+        <record id="hr_employee_view_form_inherited" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.inherited</field>
+            <field name="model">hr.employee</field><!--nombre del modelo-->
+            <field name="inherit_id" ref="hr.view_employee_form"/><!--nombre de la vista heredada-->
+            <field name="arch" type="xml">
+<!--insertamos campos nuevo en la vista -->
+			<xpath expr='//field[@name="birthday"]' position="after">	
+             <field name="edad"/>
+            </xpath>
+ 		
+			
+            <xpath expr='//field[@name="parent_id"]'  position="replace">
+			<field name="parent_id"  string="Jefe Inmediato"  groups="hr.group_hr_user"/>
+             </xpath>
+			
+			<xpath expr='//field[@name="department_id"]' position="replace">     
+            <field name="department_id"  string="Ubicación Dpto."   groups="hr.group_hr_user"/>
+            </xpath>
+		
+		
+			<xpath expr='//field[@name="parent_id"]' position="after">    
+            <field name="x_fech_ing"   groups="hr.group_hr_user"/>
+			<field name="ano_antigue" />
+            </xpath>
+		
+
+                <field name="address_home_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+
+                <field name="coach_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+		<xpath expr='//field[@name="address_home_id"]' position="after">
+            <field name="direccion"  placeholder="Ejemplo Av. las Americas, Residencias las Marias ..." colspan="4"/>
+			<field name="casa"/>
+			<field name="phone"/>
+        </xpath>
+		
+		
+        <xpath expr='//page[@name="personal_information"]' position="inside">
+            <group string="Movimiento de Personal"  groups="hr.group_hr_user">
+            <field name="mopersonal" nolabel="1"/>
+           </group>
+        </xpath>
+		
+		
+
+<xpath expr='//page[@name="personal_information"]' position="inside">	 	
+<group name="Información Medica" string="Información Medica"   groups="hr.group_hr_user">
+<field name="sangre"/>
+<field name="enfermedad"/>
+</group>
+ </xpath>	
+
+</field>
+</record>
+
+
+<record id="view_mopersonal_tree" model="ir.ui.view"> <!--vista tipo tree o arbol -->
+            <field name="name">hr.mopersonal.tree</field> <!--nombre de la vista creada-->
+            <field name="model">hr.mopersonal</field><!--nombre del modelo-->
+            <field name="arch" type="xml">
+                <tree string="Movimiento de Personal" editable="bottom">
+                    <field name="name"/>
+					<field name="employee_id"/>
+                    <field name="fech_tras"/>
+					 <field name="cargo"/>
+					 <field name="department"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
